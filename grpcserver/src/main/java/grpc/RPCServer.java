@@ -96,7 +96,7 @@ public class RPCServer {
 
 	@Override
 	public void testEightLongArray(EightLongArrayRequest request, StreamObserver<LongResponse> responseObserver) {
-		long resposta = Procedures.eightLongArrayRequest((Long[])(request.getArrayList().toArray()));
+		long resposta = Procedures.eightLongArrayRequest(request.getArrayList());
 		LongResponse reply = LongResponse.newBuilder().setResposta(resposta).build();
 		responseObserver.onNext(reply);
 		responseObserver.onCompleted();

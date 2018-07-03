@@ -4,32 +4,103 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 
 import protobufgencode.Aluno;
+import protobufgencode.Materia;
 import protobufgencode.Professor;
 import protobufgencode.Resultado;
 import protobufgencode.Turma;
 
 public class Procedures {
 	
+	private static Resultado r;
+	private static long longResponse = Long.MIN_VALUE;
+	
+	
+	static {
+		List<Aluno> lista, apr,repr,rec;
+		lista = new ArrayList<Aluno>();
+		apr = new ArrayList<Aluno>();
+		repr = new ArrayList<Aluno>();
+		rec = new ArrayList<Aluno>();
+		
+		double media,mediaturma;
+		
+		mediaturma=0;
+		
+		List<Double> n;
+		Aluno alunoAux;
+		
+		Random ra = new Random();
+		for(int i=0; i<60; i++) {
+			n = new ArrayList<Double>();
+			media=0;
+			
+			for(int a=0; a<3; a++) {
+				n.add(ra.nextDouble()*10.0);
+			}
+			
+			for(Double d : n) {
+				media+=d;
+			}
+			
+			media = media/n.size();
+			
+			alunoAux=Aluno.newBuilder().setId(i).setMedia(media).setNome("Aluno"+i).addAllNotas(n).build();
+			
+			if(media<3.0) {
+				repr.add(alunoAux);
+			} else if(media<5.0) {
+				rec.add(alunoAux);
+			} else {
+				apr.add(alunoAux);
+			}
+			
+			mediaturma+=media;
+			
+			lista.add(alunoAux);
+		}
+		
+		mediaturma = mediaturma/lista.size();
+		
+		Professor p = Professor.newBuilder().setNome("Professor").setNome("NomeProfessorServidor").build();
+		
+		Materia m = Materia.newBuilder().setCodigo("SERVIDOR").setNome("Materia turma servidor").setDescricao("Descricao").build();
+		
+		Turma t = Turma.newBuilder()
+				.setMateria(m)
+				.setProfessor(p)
+				.addAllAlunos(lista)
+				.build();
+		
+		r = Resultado.newBuilder()
+				.setMediaTurma(mediaturma)
+				.addAllRecuperacao(rec)
+				.addAllAprovados(apr)
+				.addAllReprovados(repr)
+				.setTurma(t).build();
+	}
+	
 	public static long longRequest(long valor){
-		return -valor;
+		return longResponse;
 	}
 	
 	public static long eightLongRequest(long val1, long val2, long val3, long val4, long val5, long val6, long val7, long val8){
-		return val1+val2+val3+val4+val5+val6+val7+val8;
+		return longResponse;
 	}
 	
-	public static long eightLongArrayRequest(Long[] longs){
-		long resp=0;
+	public static long eightLongArrayRequest(List<Long> l){
+		/*long resp=0;
 		for(int i=0; i<longs.length; i++){
 			resp-=longs[i];
-		}
-		return resp;
+		}*/
+		return longResponse;
 	}
 	
 	public static String testStringLenghtRequest(String valor){
-		return valor.toUpperCase();
+		return valor;
 	}
 	
 	public static void testException(){
@@ -38,17 +109,18 @@ public class Procedures {
 	}
 	
 	public static Collection<Aluno> testCollections(Collection<Aluno> alunos){
-		LinkedList<Aluno> entrada = new LinkedList<Aluno>(alunos);
+		/*LinkedList<Aluno> entrada = new LinkedList<Aluno>(alunos);
 		LinkedList<Aluno> saida = new LinkedList<Aluno>();
 		Iterator<Aluno> it = entrada.descendingIterator();
 		while(it.hasNext()){
 			saida.add(it.next());
 		}
-		return saida;
+		return saida;*/
+		return r.getTurma().getAlunosList();
 	}
 	
 	public static Resultado testComplex(Turma t){
-		ArrayList<Aluno> aprovados, reprovados, recuperacao, turmaAlunos;
+		/*ArrayList<Aluno> aprovados, reprovados, recuperacao, turmaAlunos;
 		
 		
 		aprovados = new ArrayList<Aluno>();
@@ -102,7 +174,7 @@ public class Procedures {
 				.setTurma(auxT)
 				.setMediaTurma(mediaSala)
 				.build();
-		
+		*/
 		return r;
 	}
 
