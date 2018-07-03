@@ -2,19 +2,64 @@ syntax = "proto3";
 option java_multiple_files = true;
 option java_package = "protobufgencode";
 option java_outer_classname = "HelloWorldProto";
+import "google/protobuf/empty.proto";
 
 // The greeting service definition.
-service Greeter {
-  // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloResponse) {}
+service EP {
+  //void to void test
+  rpc TestVoid (google.protobuf.Empty) returns (google.protobuf.Empty){}
+  //long to long test
+  rpc TestLong (LongRequest) returns (LongResponse){}
+  //8 long to long test
+  rpc TestEightLong (EightLongRequest) returns (LongResponse){}
+  //8 long array test
+  rpc TestEightLongArray (EightLongArrayRequest) returns (LongResponse){}
+  //String length test
+  rpc TestStringLength (StringRequest) returns (StringResponse){}
+  //ComplextType param test
+  rpc TestComplexType (ComplexRequest) returns (ComplexResponse){}
+  //Test manipulation of remote collection
+  rpc TestRemoteCollection (CollectionRequest) returns (CollectionResponse){}
+  //Test many arguments request
+  rpc TestManyArguments (ArgumentsRequest) returns (google.protobuf.Empty){}
+  //Test Exception
+  rpc TestException (google.protobuf.Empty) returns (google.protobuf.Empty){}
 }
 
-// The request message containing the user's name.
-message HelloRequest {
-  string name = 1;
+message LongRequest { int64 numero=1; } 
+message LongResponse { int64 resposta=1; }
+message EightLongRequest { int64 param1=1; int64 param2=2; int64 param3=3; int64 param4=4; int64 param5=5; int64 param6=6; int64 param7=7; int64 param8=8; }
+message EightLongArrayRequest { repeated int64 array=1; }
+
+message StringRequest { string req=1; }
+message StringResponse { string resp=1;}
+
+message Aluno { string nome=1; int64 id=2; repeated double notas=3; double media=4; }
+message Professor { string nome=1; int64 id=2; }
+message Materia { string nome=1; string codigo=2; string descricao=3; }
+message Turma { Materia materia=1; Professor professor=2; repeated Aluno alunos=3; }
+message Resultado { Turma turma=1; repeated Aluno aprovados=2; repeated Aluno recuperacao=3; repeated Aluno reprovados=4; double mediaTurma=5; }
+message ComplexRequest { Turma turma=1; }
+message ComplexResponse { Resultado resultado=1; }
+
+message CollectionRequest { repeated Aluno alunos=1; }
+message CollectionResponse { repeated Aluno alunos=1; }
+
+message ArgumentsRequest {
+	int32 num=1; int64 num2=2; float num3=3; double num4=4; bool boolean=5; string str=6;
+	int32 num7=7; int64 num8=8; float num9=9; double num10=10; bool boolean2=11; string str2=12;
+	int32 num13=13; int64 num14=14; float num15=15; double num16=16; bool boolean3=17; string str3=18;
+	int32 num19=19; int64 num20=20; float num21=21; double num22=22; bool boolean4=23; string str4=24; 
+	int32 num25=25; int64 num26=26; float num27=27; double num28=28; bool boolean5=29; string str5=30;
+    int32 num31=31; int64 num32=32; float num33=33; double num34=34; bool boolean6=35; string str6=36;
+    Aluno aluno=37;
 }
+// The request message containing the user's name.
+//message HelloRequest {
+//  string name = 1;
+//}
 
 // The response message containing the greetings
-message HelloResponse {
-  string message = 1;
-}
+//message HelloResponse {
+//  string message = 1;
+//}
