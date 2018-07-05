@@ -2,8 +2,6 @@ package servidor;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -65,7 +63,7 @@ public class Procedures {
 		
 		mediaturma = mediaturma/lista.size();
 		
-		Professor p = Professor.newBuilder().setNome("Professor").setNome("NomeProfessorServidor").build();
+		Professor p = Professor.newBuilder().setNome("Professor").setId(Long.MAX_VALUE).build();
 		
 		Materia m = Materia.newBuilder().setCodigo("SERVIDOR").setNome("Materia turma servidor").setDescricao("Descricao").build();
 		

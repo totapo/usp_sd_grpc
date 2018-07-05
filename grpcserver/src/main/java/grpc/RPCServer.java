@@ -35,9 +35,9 @@ public class RPCServer {
 
   private Server server;
  
-  public void start() throws IOException {
+  public void start(int port) throws IOException {
     /* The port on which the server should run */
-    int port = 50051;
+    //int port = 50051;
     server = ServerBuilder.forPort(port)
         .addService(new EpImpl())
         .build()
